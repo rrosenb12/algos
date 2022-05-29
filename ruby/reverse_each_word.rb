@@ -5,7 +5,7 @@
 def ReverseEachWord(sentence)
     reversed_sentence_array = []
     for word in sentence.split(" ") do
-        reversed_sentence_array << word.reverse()
+        reversed_sentence_array << word.reverse
     end
     return (reversed_sentence_array.join(" "))
 end
