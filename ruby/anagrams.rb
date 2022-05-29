@@ -9,14 +9,13 @@
 def anagrams(string1, string2)
     if string1 == string2
         return true
-    elsif string1.length == string2.length
-        if string1.split("").sort == string2.split("").sort 
-            return true
-        end
+    elsif string1.length == string2.length and string1.split("").sort == string2.split("").sort 
+        return true
     else 
         return false
     end
-
 end
 
 puts anagrams("cat", "tac")
+puts anagrams("elbow","below")
+puts anagrams("whats","up")
