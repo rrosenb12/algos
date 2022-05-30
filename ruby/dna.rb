@@ -5,6 +5,9 @@
 def DNA_strand(strand)
     complements = {"A" => "T", "T" => "A", "C" => "G", "G" => "C"}
     complementary_side = ""
+    if strand.length == 0
+        return false
+    end
     for sym in strand.split("")
         complementary_side += complements[sym]
     end
