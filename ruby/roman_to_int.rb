@@ -29,16 +29,14 @@ def roman_to_int(roman)
     roman_conversions = {"I" => 1, "V" => 5, "X" => 10, "L" => 50, "C" => 100, "D" => 500, "M" => 1000}
     integer_value = 0
     n = 0
-    roman.split("").each do |numeral|    
+    roman.each_char do |numeral|    
         if n == 0 and numeral != "I"
             integer_value += roman_conversions[numeral]
         else
             next_numeral = roman[n + 1]
             last_numeral = roman[n - 1]
             if numeral == "I" 
-                if next_numeral == "V"
-                    integer_value += roman_conversions[next_numeral] - roman_conversions[numeral]
-                elsif next_numeral == "X"
+                if next_numeral == "V" or next_numeral == "X"
                     integer_value += roman_conversions[next_numeral] - roman_conversions[numeral]
                 else
                     integer_value += roman_conversions[numeral]
@@ -49,9 +47,7 @@ def roman_to_int(roman)
                 end
             elsif numeral == "X"
                 if roman[last_numeral] != "I"
-                    if next_numeral == "L"
-                        integer_value += roman_conversions[next_numeral] - roman_conversions[numeral]
-                    elsif next_numeral == "C"
+                    if next_numeral == "L" or next_numeral = "C"
                         integer_value += roman_conversions[next_numeral] - roman_conversions[numeral]
                     else 
                         integer_value += roman_conversions[numeral]
@@ -63,19 +59,13 @@ def roman_to_int(roman)
                 end
             elsif numeral == "C"
                 if roman[last_numeral] != "X"
-                    if next_numeral == "D"
-                        integer_value += roman_conversions[next_numeral] - roman_conversions[numeral]
-                    elsif next_numeral == "M"
+                    if next_numeral == "D" or next_numeral = "M"
                         integer_value += roman_conversions[next_numeral] - roman_conversions[numeral]
                     else 
                         integer_value += roman_conversions[numeral]
                     end
                 end
-            elsif numeral == "D"
-                if roman[last_numeral] != "C"
-                    integer_value += roman_conversions[numeral]
-                end
-            elsif numeral == "M"
+            elsif numeral == "D" or numeral == "M"
                 if roman[last_numeral] != "C"
                     integer_value += roman_conversions[numeral]
                 end
