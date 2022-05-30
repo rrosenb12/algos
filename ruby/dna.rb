@@ -8,10 +8,11 @@ def DNA_strand(strand)
     if strand.length == 0
         return false
     end
-    for sym in strand.split("")
+    strand.split("").each do |sym|
         complementary_side += complements[sym]
     end
     return complementary_side
 end
 
 puts DNA_strand("AATGC")
+puts DNA_strand("GTAT")
