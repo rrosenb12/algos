@@ -29,12 +29,26 @@ def roman_to_int(roman)
     roman_conversions = {"I" => 1, "V" => 5, "X" => 10, "L" => 50, "C" => 100, "D" => 500, "M" => 1000}
     integer_value = 0
     n = 0
-    roman.each_char do |numeral|    
-        if n == 0 and numeral != "I"
+    roman.each_char do |numeral|   
+        next_numeral = roman[n + 1]
+        last_numeral = roman[n - 1]
+        if n == 0 and numeral != "I" and numeral != "C" and numeral != "X"
             integer_value += roman_conversions[numeral]
-        else
-            next_numeral = roman[n + 1]
-            last_numeral = roman[n - 1]
+        elsif n == 0 and (numeral == "C" or numeral == "X")
+            if numeral == "X"
+                if next_numeral == "L" or next_numeral == "C"
+                    integer_value += roman_conversions[next_numeral] - roman_conversions[numeral]
+                else 
+                    integer_value += roman_conversions[numeral]
+                end
+            elsif numeral == "C"
+                if next_numeral == "D" or next_numeral == "M"
+                    integer_value += roman_conversions[next_numeral] - roman_conversions[numeral]
+                else 
+                    integer_value += roman_conversions[numeral]
+                end
+            end
+        else 
             if numeral == "I" 
                 if next_numeral == "V" or next_numeral == "X"
                     integer_value += roman_conversions[next_numeral] - roman_conversions[numeral]
@@ -42,31 +56,31 @@ def roman_to_int(roman)
                     integer_value += roman_conversions[numeral]
                 end
             elsif numeral == "V"
-                if roman[last_numeral] != "I"
+                if last_numeral != "I"
                     integer_value += roman_conversions[numeral]
                 end
             elsif numeral == "X"
-                if roman[last_numeral] != "I"
-                    if next_numeral == "L" or next_numeral = "C"
+                if last_numeral != "I"
+                    if next_numeral == "L" or next_numeral == "C"
                         integer_value += roman_conversions[next_numeral] - roman_conversions[numeral]
                     else 
                         integer_value += roman_conversions[numeral]
                     end
                 end
             elsif numeral == "L"
-                if roman[last_numeral] != "X"
+                if last_numeral != "X"
                     integer_value += roman_conversions[numeral]
                 end
             elsif numeral == "C"
-                if roman[last_numeral] != "X"
-                    if next_numeral == "D" or next_numeral = "M"
+                if last_numeral != "X"
+                    if next_numeral == "D" or next_numeral == "M"
                         integer_value += roman_conversions[next_numeral] - roman_conversions[numeral]
                     else 
                         integer_value += roman_conversions[numeral]
                     end
                 end
             elsif numeral == "D" or numeral == "M"
-                if roman[last_numeral] != "C"
+                if last_numeral != "C"
                     integer_value += roman_conversions[numeral]
                 end
             end
@@ -76,6 +90,17 @@ def roman_to_int(roman)
     return integer_value
 end
 
+# I can be placed before V (5) and X (10) to make 4 and 9.
+# X can be placed before L (50) and C (100) to make 40 and 90.
+# C can be placed before D (500) and M (1000) to make 400 and 900.
+
 puts roman_to_int("MCMXCIV")
+# 1994
 puts roman_to_int("LVIII")
+# 58
 puts roman_to_int("III")
+# 3
+puts roman_to_int("CMLII")
+# 952
+puts roman_to_int("CDLXIX")
+# 469
